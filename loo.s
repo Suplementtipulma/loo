@@ -1,3 +1,20 @@
+#loo 
+#Copyright (C) 2016  Suplementtipulma
+
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+
+#You should have received a copy of the GNU General Public License
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
 #COMPILE 32-BIT gcc -m32 -o loo loo.s
 	
 .section .data
@@ -11,7 +28,8 @@ fileHandle:	.long 0
 #.equ		BMPIDENTIFIER, 'BM'
 bmpID:		.ascii "BM"
 errorMsg:	.ascii "Error: Invalid file format\0"
-	
+license:	.ascii "loo  Copyright (C) 2016  suplementtipulma\nThis program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\nThis is free software, and you are welcome to redistribute it\nunder certain conditions; type `show c' for details.\n\n\0"
+
 .equ		STARTADDROFFSET,    10	#4 bytes
 .equ		BITMAPWIDTHOFFSET,  18	#4 bytes
 .equ		BITMAPHEIGHTOFFSET, 22	#4 bytes
@@ -26,8 +44,8 @@ errorMsg:	.ascii "Error: Invalid file format\0"
 msg:		.ascii "\n>\0"
 	
 #dataRaw:	.ascii "FY10\0" "HI7\0" "PS7\0"
-#		       "MU5\0" "BI6\0" "BI6\0" "ƒI83\0"
-#		       "ƒI12\0" "ENA103\0" "RAA9+RA\0"
+#		       "MU5\0" "BI6\0" "BI6\0" "√ÑI83\0"
+#		       "√ÑI12\0" "ENA103\0" "RAA9+RA\0"
 #		       "TE3\0" "UE31\0" "MAA142\0" "MU9\0"
 #		       "KE3\0" "YH8\0" "ESB10\0" "MAA141\0" "SAA9+SA\0"
 data:		   .fill 125
@@ -72,10 +90,10 @@ dataRaw:
 	#tilaa 100 eri aineelle, joissa enint. 8 kirjainta
 	
 	.rept 100
-	.ascii "\0\0\0\0\0\0\0\0\0"				#Ensimm‰inen tavu kertoo kyseisen aineen sijaintikolmikon sijainnin taulukossa
+	.ascii "\0\0\0\0\0\0\0\0\0"				#Ensimm√§inen tavu kertoo kyseisen aineen sijaintikolmikon sijainnin taulukossa
 	.endr
 	
-	#8 erilaista laatikkoa -> 8*3 sijaintia			sijainnit kolmen ryhmiss‰ eli 8 eri ryhm‰‰
+	#8 erilaista laatikkoa -> 8*3 sijaintia			sijainnit kolmen ryhmiss√§ eli 8 eri ryhm√§√§
 	
 	.rept 24
 	.byte 0
@@ -96,6 +114,10 @@ dataRaw:
 	
 .globl _main	
 _main:
+	pushl $license
+	call _printf
+	addl $4, %esp
+
 	call init
 	call readInput
 	#call calc
