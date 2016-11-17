@@ -37,7 +37,7 @@ license:	.ascii "loo  Copyright (C) 2016  suplementtipulma\nThis program comes w
 .equ		BITMAPWIDTHOFFSET,  18	#4 bytes
 .equ		BITMAPHEIGHTOFFSET, 22	#4 bytes
 .equ		BITSPERPIXELOFFSET, 28  #2 bytes	
-.equ		COMPRESSUSEDOFFSET, 30  #4 bytes	tulee olla BL_RGB eli 0				
+.equ		COMPRESSUSEDOFFSET, 30  #4 bytes	 tulee olla BL_RGB eli 0				
 .equ		IMAGESIZEOFFSET,    34	#4 bytes	
 	
 #.equ		FIRSTLOC, /*...*/
@@ -47,8 +47,8 @@ license:	.ascii "loo  Copyright (C) 2016  suplementtipulma\nThis program comes w
 msg:		.ascii "\n>\0"
 	
 #dataRaw:	.ascii "FY10\0" "HI7\0" "PS7\0"
-#		       "MU5\0" "BI6\0" "BI6\0" "�I83\0"
-#		       "�I12\0" "ENA103\0" "RAA9+RA\0"
+#		       "MU5\0" "BI6\0" "BI6\0" "ÄI83\0"
+#		       "ÄI12\0" "ENA103\0" "RAA9+RA\0"
 #		       "TE3\0" "UE31\0" "MAA142\0" "MU9\0"
 #		       "KE3\0" "YH8\0" "ESB10\0" "MAA141\0" "SAA9+SA\0"
 data:		   .fill 125
@@ -93,10 +93,10 @@ dataRaw:
 	#tilaa 100 eri aineelle, joissa enint. 8 kirjainta
 	
 	.rept 100
-	.ascii "\0\0\0\0\0\0\0\0\0"				#Ensimm�inen tavu kertoo kyseisen aineen sijaintikolmikon sijainnin taulukossa
+	.ascii "\0\0\0\0\0\0\0\0\0"				#Ensimmäinen tavu kertoo kyseisen aineen sijaintikolmikon sijainnin taulukossa
 	.endr
 	
-	#8 erilaista laatikkoa -> 8*3 sijaintia			sijainnit kolmen ryhmiss� eli 8 eri ryhm��
+	#8 erilaista laatikkoa -> 8*3 sijaintia			sijainnit kolmen ryhmissä eli 8 eri ryhmää
 	
 	.rept 24
 	.byte 0
@@ -370,8 +370,8 @@ license:	.ascii "loo  Copyright (C) 2016  suplementtipulma\nThis program comes w
 msg:		.ascii "\n>\0"
 	
 #dataRaw:	.ascii "FY10\0" "HI7\0" "PS7\0"
-#		       "MU5\0" "BI6\0" "BI6\0" "ÄI83\0"
-#		       "ÄI12\0" "ENA103\0" "RAA9+RA\0"
+#		       "MU5\0" "BI6\0" "BI6\0" "Ã„I83\0"
+#		       "Ã„I12\0" "ENA103\0" "RAA9+RA\0"
 #		       "TE3\0" "UE31\0" "MAA142\0" "MU9\0"
 #		       "KE3\0" "YH8\0" "ESB10\0" "MAA141\0" "SAA9+SA\0"
 data:		   .fill 125
@@ -416,10 +416,10 @@ dataRaw:
 	#tilaa 100 eri aineelle, joissa enint. 8 kirjainta
 	
 	.rept 100
-	.ascii "\0\0\0\0\0\0\0\0\0"				#Ensimmäinen tavu kertoo kyseisen aineen sijaintikolmikon sijainnin taulukossa
+	.ascii "\0\0\0\0\0\0\0\0\0"				#EnsimmÃ¤inen tavu kertoo kyseisen aineen sijaintikolmikon sijainnin taulukossa
 	.endr
 	
-	#8 erilaista laatikkoa -> 8*3 sijaintia			sijainnit kolmen ryhmissä eli 8 eri ryhmää
+	#8 erilaista laatikkoa -> 8*3 sijaintia			sijainnit kolmen ryhmissÃ¤ eli 8 eri ryhmÃ¤Ã¤
 	
 	.rept 24
 	.byte 0
