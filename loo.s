@@ -45,10 +45,6 @@ errorMsg:	.ascii "Error: Invalid file format\0"
 license:	.ascii "loo  Copyright (C) 2016  Suplementtipulma\nThis program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\nThis is free software, and you are welcome to redistribute it\nunder certain conditions; type `show c' for details.\n\n\0"
 
 primeConstant:	   .int 191
-userInputSize:	   .int 0
-userInputElements: .int 0	
-
-
 readBuffer:	   .fill 10
 	
 dataRaw:	
@@ -70,10 +66,11 @@ hashedUserInput:
 	.int 0
 	.endr
 
+userInputLength:	.int 0
+
 	
 .section .bss
-.lcomm userInput, 50
-.lcomm userInputLengths, 20	
+	
 
 	
 .section .text
@@ -88,6 +85,7 @@ _main:
 	
 	call init
 	call readInput
+	
 	#call calc
 	jmp exit
 
@@ -158,11 +156,6 @@ ffError:
 	call _printf
 	addl $4, %esp
 	
-	#pushl fileHandle
-	#call _fclose
-	
-	#addl $8, %esp
-	
 	jmp exit
 	
 readInput:	
@@ -175,39 +168,46 @@ readInputLoop:
 	call _printf
 	addl $4, %esp		
 
+	xorl %eax, %eax
+	xorl %esi, %esi
+	
 	call _getchar
 	cmpb $NEWLINE, %al			
 	je endCall
 
-	movl $0, %ecx
-	movl userInputSize, %edx
-	movb %al, userInput(%edx, %ecx, 1) 
-	incl %ecx
-
+	movl %eax, %esi
 	
 	jmp innerLoop
 	
 innerLoop:	
-	
-	call _getchar
+	call _getchar					
 	cmpb $NEWLINE, %al			
 	je endLine
 		
-	movb %al, userInput(%edx, %ecx, 1) 	
-	incl %ecx
-
+	movl %eax, %ebx	
+	movl %esi, %eax
+	
+	#mull primeConstant		#for full precision arithemtic	
+	imull primeConstant, %eax
+	
+	movl %eax, %esi
+	addl %ebx, %esi
+	
 	jmp innerLoop
 
 endLine:	
-	movb $NULLTERM, userInput(%edx, %ecx, 1) 		#crash
+	xorl %edx, %edx
+	movl %esi, %eax
+	movl $TABLESIZE, %ebx
 
-	addl %ecx, %edx
-	movl %edx, userInputSize
-
-	movl userInputElements, %ebx
-	movl %ecx, userInputLengths(, %ebx, 1)
-	incl userInputElements
-
+	#cdq				#for full precision arithmetic
+	#divl %ebx			#
+	idivl %ebx, %eax
+	
+	movl userInputLength, %ebx
+	movl %edx, hashedUserInput(, %ebx, 4)
+	incl userInputLength	
+	
 	jmp readInputLoop
 	
 endCall:
@@ -219,15 +219,6 @@ exit:
 	movl $0, %eax
 	pushl $0
 	call _ExitProcess@4
-
-	
-calc:
-	pushl %ebp
-	movl %esp, %ebp
-	
-	#...
-
-	jmp endCall
 
 hash:
 	pushl %ebp
@@ -263,6 +254,14 @@ hashEnd:
 	
 hashFind:	
 	
+
+calc:
+	pushl %ebp
+	movl %esp, %ebp
+	
+	#...
+
+	jmp endCall
 	
 disp:	
 
